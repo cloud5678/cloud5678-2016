@@ -1,10 +1,12 @@
 #pragma config(Sensor, in1,    gyro,           sensorGyro)
-#pragma config(Sensor, dgtl1,  leftEncoder,    sensorQuadEncoder)
-#pragma config(Sensor, dgtl3,  rightEncoder,   sensorQuadEncoder)
-#pragma config(Motor,  port2,           rightFront,    tmotorVex393_MC29, openLoop, driveRight, encoderPort, dgtl3)
-#pragma config(Motor,  port3,           leftFront,     tmotorVex393_MC29, openLoop, driveLeft, encoderPort, dgtl1)
-#pragma config(Motor,  port4,           rightRear,     tmotorVex393_MC29, openLoop, driveRight)
-#pragma config(Motor,  port5,           leftRear,      tmotorVex393_MC29, openLoop, driveLeft)
+#pragma config(Sensor, dgtl1,  leftFrontEncoder, sensorQuadEncoder)
+#pragma config(Sensor, dgtl3,  rightFrontEncoder, sensorQuadEncoder)
+#pragma config(Sensor, dgtl5,  leftRearEncoder, sensorQuadEncoder)
+#pragma config(Sensor, dgtl7,  rightRearEncoder, sensorQuadEncoder)
+#pragma config(Motor,  port2,           rightFront,    tmotorVex393_MC29, PIDControl, driveRight, encoderPort, dgtl3)
+#pragma config(Motor,  port3,           leftFront,     tmotorVex393_MC29, PIDControl, driveLeft, encoderPort, dgtl1)
+#pragma config(Motor,  port4,           rightRear,     tmotorVex393_MC29, PIDControl, driveRight, encoderPort, dgtl7)
+#pragma config(Motor,  port5,           leftRear,      tmotorVex393_MC29, PIDControl, driveLeft, encoderPort, dgtl5)
 #pragma config(Motor,  port6,           intake1,       tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port7,           intake2,       tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port8,           shooter,       tmotorVex393TurboSpeed_MC29, openLoop)
@@ -37,8 +39,10 @@ void pre_auton()
 {
 	wait1Msec(2000);
 	bMotorReflected[port2] = 1;
-	SensorValue[leftEncoder] = 0;
-	SensorValue[rightEncoder] = 0;
+	SensorValue[leftFrontEncoder] = 0;
+	SensorValue[rightFrontEncoder] = 0;
+	SensorValue[leftRearEncoder] = 0;
+	SensorValue[rightRearEncoder] = 0;
 
 	bStopTasksBetweenModes = true;
 
@@ -103,115 +107,123 @@ void rotateR(int speed)
 
 task autonomous()
 {
-	SensorValue[leftEncoder] = 0;
-	SensorValue[rightEncoder] = 0;
-	while(SensorValue[leftEncoder] < 500)//These numbers are counts, for every 90 counts is one rotation (i.e. 90 for a 4 inch wheel means the robot will move 4 inches)
+	SensorValue[leftFrontEncoder] = 0;
+	SensorValue[rightFrontEncoder] = 0;
+	SensorValue[leftRearEncoder] = 0;
+	SensorValue[rightRearEncoder] = 0;
+	while(SensorValue[leftFrontEncoder] < 500)//These numbers are counts, for every 90 counts is one rotation (i.e. 90 for a 4 inch wheel means the robot will move 4 inches)
 	{
-		if(SensorValue[leftEncoder] > SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] > SensorValue[rightFrontEncoder])
 		{
 			errorLeft();
 		}
-		if(SensorValue[leftEncoder] < SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] < SensorValue[rightFrontEncoder])
 		{
 			errorRight();
 		}
-		if(SensorValue[leftEncoder] == SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] == SensorValue[rightFrontEncoder])
 		{
 			drive(127);
 		}
 	}
-	SensorValue[leftEncoder] = 0;
-	while(SensorValue[leftEncoder] < 70)//Turn right for 70 clicks or .78 of a wheel rotation
+	SensorValue[leftFrontEncoder] = 0;
+	SensorValue[rightFrontEncoder] = 0;
+	while(SensorValue[leftFrontEncoder] < 70)//Turn right for 70 clicks or .78 of a wheel rotation
 	{
-		if(SensorValue[leftEncoder] > SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] > SensorValue[rightFrontEncoder])
 		{
 			errorLeft();
 		}
-		if(SensorValue[leftEncoder] < SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] < SensorValue[rightFrontEncoder])
 		{
 			errorRight();
 		}
-		if(SensorValue[leftEncoder] == SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] == SensorValue[rightFrontEncoder])
 		{
 			rotateR(127);
 		}
 	}
-	SensorValue[leftEncoder] = 0;
-	while(SensorValue[leftEncoder] < 270)//Straight for 3 rotations
+	SensorValue[leftFrontEncoder] = 0;
+	SensorValue[rightFrontEncoder] = 0;
+	while(SensorValue[leftFrontEncoder] < 270)//Straight for 3 rotations
 	{
-			if(SensorValue[leftEncoder] > SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] > SensorValue[rightFrontEncoder])
 		{
 			errorLeft();
 		}
-		if(SensorValue[leftEncoder] < SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] < SensorValue[rightFrontEncoder])
 		{
 			errorRight();
 		}
-		if(SensorValue[leftEncoder] == SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] == SensorValue[rightFrontEncoder])
 		{
 			drive(127);
 		}
 	}
-	SensorValue[leftEncoder] = 0;
-	while(SensorValue[leftEncoder] < 92)//Turn left for a little over 1 wheel rotation
+	SensorValue[leftFrontEncoder] = 0;
+	SensorValue[rightFrontEncoder] = 0;
+	while(SensorValue[leftFrontEncoder] < 92)//Turn left for a little over 1 wheel rotation
 	{
-			if(SensorValue[leftEncoder] > SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] > SensorValue[rightFrontEncoder])
 		{
 			errorLeft();
 		}
-		if(SensorValue[leftEncoder] < SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] < SensorValue[rightFrontEncoder])
 		{
 			errorRight();
 		}
-		if(SensorValue[leftEncoder] == SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] == SensorValue[rightFrontEncoder])
 		{
 			rotateL(127);
 		}
 	}
-	SensorValue[leftEncoder] = 0;
-	while(SensorValue[leftEncoder] < 180)//Stragiht for two rotations
+	SensorValue[leftFrontEncoder] = 0;
+	SensorValue[rightFrontEncoder] = 0;
+	while(SensorValue[leftFrontEncoder] < 180)//Stragiht for two rotations
 	{
-		if(SensorValue[leftEncoder] > SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] > SensorValue[rightFrontEncoder])
 		{
 			errorLeft();
 		}
-		if(SensorValue[leftEncoder] < SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] < SensorValue[rightFrontEncoder])
 		{
 			errorRight();
 		}
-		if(SensorValue[leftEncoder] == SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] == SensorValue[rightFrontEncoder])
 		{
 			drive(127);
 		}
 	}
-	SensorValue[leftEncoder] = 0;
-	while(SensorValue[leftEncoder] < 93)//Turn left for a little over 1 wheel rotation
+	SensorValue[leftFrontEncoder] = 0;
+	SensorValue[rightFrontEncoder] = 0;
+	while(SensorValue[leftFrontEncoder] < 93)//Turn left for a little over 1 wheel rotation
 	{
-			if(SensorValue[leftEncoder] > SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] > SensorValue[rightFrontEncoder])
 		{
 			errorLeft();
 		}
-		if(SensorValue[leftEncoder] < SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] < SensorValue[rightFrontEncoder])
 		{
 			errorRight();
 		}
-		if(SensorValue[leftEncoder] == SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] == SensorValue[rightFrontEncoder])
 		{
 			rotateL(127);
 		}
 	}
-	SensorValue[leftEncoder] = 0;
-	while(SensorValue[leftEncoder] < 140)//Straight for about 1.5 wheel rotations
+	SensorValue[leftFrontEncoder] = 0;
+	SensorValue[rightFrontEncoder] = 0;
+	while(SensorValue[leftFrontEncoder] < 140)//Straight for about 1.5 wheel rotations
 	{
-			if(SensorValue[leftEncoder] > SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] > SensorValue[rightFrontEncoder])
 		{
 			errorLeft();
 		}
-		if(SensorValue[leftEncoder] < SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] < SensorValue[rightFrontEncoder])
 		{
 			errorRight();
 		}
-		if(SensorValue[leftEncoder] == SensorValue[rightEncoder])
+		if(SensorValue[leftFrontEncoder] == SensorValue[rightFrontEncoder])
 		{
 			drive(127);
 		}
