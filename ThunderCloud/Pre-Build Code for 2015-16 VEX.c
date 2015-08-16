@@ -145,23 +145,6 @@ task autonomous()
 	}
 	SensorValue[leftFrontEncoder] = 0;
 	SensorValue[rightFrontEncoder] = 0;
-	while(SensorValue[leftFrontEncoder] < 270)//Straight for 3 rotations
-	{
-		if(SensorValue[leftFrontEncoder] > SensorValue[rightFrontEncoder])
-		{
-			errorLeft();
-		}
-		if(SensorValue[leftFrontEncoder] < SensorValue[rightFrontEncoder])
-		{
-			errorRight();
-		}
-		if(SensorValue[leftFrontEncoder] == SensorValue[rightFrontEncoder])
-		{
-			drive(127);
-		}
-	}
-	SensorValue[leftFrontEncoder] = 0;
-	SensorValue[rightFrontEncoder] = 0;
 	while(SensorValue[leftFrontEncoder] < 92)//Turn left for a little over 1 wheel rotation
 	{
 		if(SensorValue[leftFrontEncoder] > SensorValue[rightFrontEncoder])
@@ -175,57 +158,6 @@ task autonomous()
 		if(SensorValue[leftFrontEncoder] == SensorValue[rightFrontEncoder])
 		{
 			rotateL(127);
-		}
-	}
-	SensorValue[leftFrontEncoder] = 0;
-	SensorValue[rightFrontEncoder] = 0;
-	while(SensorValue[leftFrontEncoder] < 180)//Stragiht for two rotations
-	{
-		if(SensorValue[leftFrontEncoder] > SensorValue[rightFrontEncoder])
-		{
-			errorLeft();
-		}
-		if(SensorValue[leftFrontEncoder] < SensorValue[rightFrontEncoder])
-		{
-			errorRight();
-		}
-		if(SensorValue[leftFrontEncoder] == SensorValue[rightFrontEncoder])
-		{
-			drive(127);
-		}
-	}
-	SensorValue[leftFrontEncoder] = 0;
-	SensorValue[rightFrontEncoder] = 0;
-	while(SensorValue[leftFrontEncoder] < 93)//Turn left for a little over 1 wheel rotation
-	{
-		if(SensorValue[leftFrontEncoder] > SensorValue[rightFrontEncoder])
-		{
-			errorLeft();
-		}
-		if(SensorValue[leftFrontEncoder] < SensorValue[rightFrontEncoder])
-		{
-			errorRight();
-		}
-		if(SensorValue[leftFrontEncoder] == SensorValue[rightFrontEncoder])
-		{
-			rotateL(127);
-		}
-	}
-	SensorValue[leftFrontEncoder] = 0;
-	SensorValue[rightFrontEncoder] = 0;
-	while(SensorValue[leftFrontEncoder] < 140)//Straight for about 1.5 wheel rotations
-	{
-		if(SensorValue[leftFrontEncoder] > SensorValue[rightFrontEncoder])
-		{
-			errorLeft();
-		}
-		if(SensorValue[leftFrontEncoder] < SensorValue[rightFrontEncoder])
-		{
-			errorRight();
-		}
-		if(SensorValue[leftFrontEncoder] == SensorValue[rightFrontEncoder])
-		{
-			drive(127);
 		}
 	}
 }
@@ -306,4 +238,11 @@ task usercontrol()
 
 	while(true)
 		wait1Msec(100);//Might need to increase in size
+	//In Case this (^) crap doesn't work. Use This
+	/*
+	motor[frontRight] = vexRT[Ch2] - vexRT[Ch1];
+	motor[backRight] =  vexRT[Ch2] + vexRT[Ch1];
+	motor[backLeft] = vexRT[Ch3] - vexRT[Ch4];
+	motor[frontLeft] =  vexRT[Ch3] + vexRT[Ch4];
+	*/
 }
