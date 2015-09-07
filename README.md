@@ -4,11 +4,11 @@ Carnegie Vanguard High School (Cloud) Robotics Code Repository for 5678_ VEX tea
 
 Carnegie Vanguard High School VEX Robotics Code 2015-2016
 
-ThunderCloud(5678) Contributor(s): 
-Rachel Tan 
+ThunderCloud(5678) Contributor(s):  
+Rachel Tan  
 
-Cumulus(5678C) Contributor(s): 
-Gilbert Martinez 
+Cumulus(5678C) Contributor(s):  
+Gilbert Martinez  
 
 Stratus(5678S) Contributor(s): 
  
