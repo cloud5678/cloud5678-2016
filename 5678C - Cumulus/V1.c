@@ -1,8 +1,4 @@
 #pragma config(Sensor, in1,    gyro,           sensorGyro)
-#pragma config(Sensor, dgtl1,  leftFrontEncoder, sensorQuadEncoder)
-#pragma config(Sensor, dgtl3,  rightFrontEncoder, sensorQuadEncoder)
-#pragma config(Sensor, dgtl5,  leftRearEncoder, sensorQuadEncoder)
-#pragma config(Sensor, dgtl7,  rightRearEncoder, sensorQuadEncoder)
 #pragma config(Motor,  port2,           rightFront,    tmotorVex393_MC29, PIDControl, driveRight, encoderPort, dgtl3)
 #pragma config(Motor,  port3,           leftFront,     tmotorVex393_MC29, PIDControl, driveLeft, encoderPort, dgtl1)
 #pragma config(Motor,  port4,           rightRear,     tmotorVex393_MC29, PIDControl, driveRight, encoderPort, dgtl7)
@@ -39,11 +35,6 @@
 void pre_auton()
 {
 	wait1Msec(2000);
-	bMotorReflected[port2] = 1;
-	SensorValue[leftFrontEncoder] = 0;
-	SensorValue[rightFrontEncoder] = 0;
-	SensorValue[leftRearEncoder] = 0;
-	SensorValue[rightRearEncoder] = 0;
 
 	bStopTasksBetweenModes = true;
 
@@ -108,7 +99,13 @@ motor [rightRear] = -speed;
 
 task autonomous()
 {
-
+	motor[shooterL] = motor[shooterR] = 127;
+		wait1Msec(6000);
+	while(true)
+	{
+		playSoundFile("1.wav");
+		wait1Msec(120000);
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -178,11 +175,11 @@ task userDriveHolo() {
 	}
 }
 ///////////////////////////////////////////////
-void setShooter (int x)
+/*void setShooter (int x)
 {
-	motor[shooterL] = motor[shooterR] = x;
+motor[shooterL] = motor[shooterR] = x;
 }
-
+*/
 task usercontrol()
 {
 	// User control code here, inside the loop
@@ -191,10 +188,10 @@ task usercontrol()
 	startTask(userDriveHolo);
 	while(true)
 	{
-		int shooter = vexRT[Btn8D];
-
-		setShooter(shooter*127);
-
+		motor[shooterL] = motor[shooterR] = Btn8D*127;
+		//int shoot = vexRT[Btn8D];
+		//setShooter(shoot*127);
+		playSoundFile("2.wav");
 	}
 
 	//In Case this (^) crap doesn't work. Use This
