@@ -8,7 +8,7 @@ ThunderCloud(5678) Contributor(s):
 Rachel Tan  
 Mika Generao  
 Cammile MacLaren  
-Ife Omaradin  
+Ife Omidiran  
 
 Cumulus(5678C) Contributor(s):  
 Gilbert Martinez  
