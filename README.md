@@ -15,7 +15,7 @@ Gilbert Martinez
 
 Stratus(5678S) Contributor(s): 
  
-Nimbus(5678N) Contributor(s): 
+Nimbus(5678N) Contributor(s):   
 Patrick Revilla  
  
 
