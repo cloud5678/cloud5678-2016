@@ -1,6 +1,6 @@
 # cloud5678-2016
 
-Carnegie Vanguard High School (Cloud) Robotics Code Repository for the 5678, 5678C, 5678S, and 5678N VEX teams in the 2016 game: Nothing but Net
+Carnegie Vanguard High School (Cloud) Robotics Code Repository for the 5678, 5678C, and 5678N VEX teams in the 2016 game: Nothing but Net
 
 Carnegie Vanguard High School VEX Robotics Code 2015-2016
 
