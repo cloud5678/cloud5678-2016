@@ -13,8 +13,6 @@ Ife Omidiran
 Cumulus(5678C) Contributor(s):  
 Gilbert Martinez  
 
-Stratus(5678S) Contributor(s): 
- 
 Nimbus(5678N) Contributor(s):   
 Patrick Revilla  
  
