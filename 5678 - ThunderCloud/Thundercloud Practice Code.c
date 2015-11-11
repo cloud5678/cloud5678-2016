@@ -98,9 +98,9 @@ void setShooter (int x)
 	motor[leftShoot1] = motor[rightShoot1] = x;
   motor[leftShoot2] = motor[rightShoot2] = x;
 }
-void intake (int x)
+void setIntake (int x, int y)
 {
-	motor[leftConveyer] = motor[rightConveyer] = x;
+	motor[leftConveyer] = motor[rightConveyer] = x - y;
 }
 task usercontrol()
 {
@@ -117,10 +117,11 @@ task usercontrol()
 		int driveX = -vexRT[Ch2];
 		int shoot = vexRT[Ch3];
 		int driveY = vexRT[Ch1] ;
-		int intaker = vexRT[Btn7U];
+		int intakeForward = vexRT[Btn7U];
+		int intakeBackwards = vexRT[Btn7D];
 		driveArcade(driveY * 127 / 128, driveX * 127 / 128);
 		setShooter(shoot);
-		intake(intaker*127);
+		setIntake(intakeForward*127, intakeBackwards*127);
 
 		// This is the main execution loop for the user control program. Each time through the loop
 		// your program should update motor + servo values based on feedback from the joysticks.
