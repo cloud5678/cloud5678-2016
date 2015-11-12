@@ -27,6 +27,10 @@
 // following function.
 //
 /////////////////////////////////////////////////////////////////////////////////////////
+void warningKiller() {
+	UserControlCodePlaceholderForTesting();
+	AutonomousCodePlaceholderForTesting();
+}
 
 void pre_auton()
 {
@@ -164,7 +168,9 @@ task usercontrol()
 {
 	while(true)
 	{
-
+  if (0 == 1) {
+    warningKiller();
+  }
 		int shoot = vexRT[Btn7U];
 		int intakeForward = vexRT[Btn6U];
 		int intakeBackwards = vexRT[Btn6D];
