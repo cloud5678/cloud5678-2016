@@ -175,7 +175,7 @@ task usercontrol()
 		int intakeForward = vexRT[Btn6U];
 		int intakeBackwards = vexRT[Btn6D];
 		setShooter(shoot*127);
-		setIntake(intakeForward*50, intakeBackwards*50);
+		setIntake(intakeForward*75, intakeBackwards*75);
 		motor[leftFront] = vexRT[Ch1] + vexRT[Ch2];
 		motor[rightRear] =  vexRT[Ch1] - vexRT[Ch2];
 		motor[leftRear] = vexRT[Ch4] + vexRT[Ch3];
