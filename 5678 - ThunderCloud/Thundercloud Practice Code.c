@@ -47,15 +47,44 @@ void pre_auton()
 //
 /////////////////////////////////////////////////////////////////////////////////////////
 
-task autonomous()
-{
+
 	// .....................................................................................
 	// Insert user code here.
 	// .....................................................................................
 
-	AutonomousCodePlaceholderForTesting();  // Remove this function call once you have "real" code.
+	void shoot ( float x)
+{
+	motor [leftShoot1] = x;
+	motor [leftShoot2] = x;
+	motor [rightShoot1] = x;
+	motor [rightShoot2] = x;
 }
 
+	void intake (float x)
+
+{
+	motor [leftConveyer] = x;
+	motor [rightConveyer] = x;
+}
+	int ballWait = 500;
+	void repeat ()
+{
+	shoot (75);
+	wait1Msec(2000);
+	intake(65);
+	wait1Msec(ballWait);
+}
+task autonomous()
+{
+
+	repeat();
+	repeat();
+	repeat();
+	repeat();
+	shoot(0);
+	intake(0);
+
+}
 /////////////////////////////////////////////////////////////////////////////////////////
 //
 //                                 User Control Task
