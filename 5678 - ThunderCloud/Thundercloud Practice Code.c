@@ -1,4 +1,4 @@
-#pragma config(Motor,  port1,           leftConveyer,  tmotorVex393_HBridge, openLoop)
+#pragma config(Motor,  port1,           leftConveyer,  tmotorVex393_HBridge, openLoop, reversed)
 #pragma config(Motor,  port2,           rightConveyer, tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port3,           leftShoot1,    tmotorVex393TurboSpeed_MC29, openLoop)
 #pragma config(Motor,  port4,           leftShoot2,    tmotorVex393TurboSpeed_MC29, openLoop, reversed)
@@ -66,10 +66,15 @@ void pre_auton()
 	motor [leftConveyer] = x;
 	motor [rightConveyer] = x;
 }
-	int ballWait = 500;
-	void repeat ()
+	void stopper ()
+	{
+		intake(0);
+	}
+
+	int ballWait = 650;
+	void repat ()
 {
-	shoot (75);
+	shoot (80);
 	wait1Msec(2000);
 	intake(65);
 	wait1Msec(ballWait);
@@ -77,10 +82,13 @@ void pre_auton()
 task autonomous()
 {
 
-	repeat();
-	repeat();
-	repeat();
-	repeat();
+	repat();
+	stopper();
+	repat();
+	stopper();
+	repat();
+	stopper();
+	repat();
 	shoot(0);
 	intake(0);
 
