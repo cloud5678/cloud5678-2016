@@ -156,9 +156,12 @@ task autonomous()
 
 
 ///////////////////////////////////////////////
-void setShooter (int x)
+void setShooter (float x, float y, float z)
 {
-	motor[shooterL] = motor[shooterR] = x;
+float sum = x+y+z;
+if (sum > 127)sum = 127;
+motor[shooterR] = sum;
+  motor[shooterL] = sum;
 }
 void setIntake (int x, int y)
 {
@@ -170,11 +173,15 @@ task usercontrol()
 	{
   if (0 == 1) {
     warningKiller();
+    rotateL(0);
+    rotateR(0);
   }
 		int shoot = vexRT[Btn7U];
 		int intakeForward = vexRT[Btn6U];
 		int intakeBackwards = vexRT[Btn6D];
-		setShooter(shoot*127);
+		float slow =vexRT[Btn7D]*70 + vexRT[Btn7R]*75 + vexRT[Btn7L]*80;
+		float fast = vexRT[Btn7U]*85;
+		setShooter(shoot, fast, slow);
 		setIntake(intakeForward*75, intakeBackwards*75);
 		motor[leftFront] = vexRT[Ch1] + vexRT[Ch2];
 		motor[rightRear] =  vexRT[Ch1] - vexRT[Ch2];

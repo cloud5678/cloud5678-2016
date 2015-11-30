@@ -74,7 +74,7 @@ void pre_auton()
 	int ballWait = 650;
 	void repat ()
 {
-	shoot (80);
+	shoot (85);
 	wait1Msec(2000);
 	intake(65);
 	wait1Msec(ballWait);
@@ -89,6 +89,7 @@ task autonomous()
 	repat();
 	stopper();
 	repat();
+	wait1Msec(4000);
 	shoot(0);
 	intake(0);
 
@@ -158,8 +159,8 @@ task usercontrol()
 		int driveY = vexRT[Ch1] ;
 		int intakeForward = vexRT[Btn5U];
 		int intakeBackwards = vexRT[Btn5D];
-		float slow =vexRT[Btn7D]*70 + vexRT[Btn7R]*75 + vexRT[Btn7L]*80;
-		float fast = vexRT[Btn7U]*85;
+		float slow =vexRT[Btn7D]*75 + vexRT[Btn7R]*80 + vexRT[Btn7L]*85;
+		float fast = vexRT[Btn7U]*90;
 		driveArcade(driveY * 127 / 128, driveX * 127 / 128);
 		setShooter(shoot, fast, slow);
 		setIntake(intakeForward*127, intakeBackwards*127);
