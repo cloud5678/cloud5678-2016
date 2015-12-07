@@ -74,9 +74,9 @@ void pre_auton()
 	int ballWait = 650;
 	void repat ()
 {
-	shoot (85);
+	shoot (87);
 	wait1Msec(2000);
-	intake(65);
+	intake(-65);
 	wait1Msec(ballWait);
 }
 task autonomous()

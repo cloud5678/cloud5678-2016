@@ -1,8 +1,8 @@
 #pragma config(UART_Usage, UART2, uartNotUsed, baudRate4800, IOPins, None, None)
 #pragma config(Sensor, in1,    gyro,           sensorNone)
 #pragma config(Motor,  port1,           shooterLB,     tmotorVex393_HBridge, openLoop, reversed)
-#pragma config(Motor,  port2,           intake1,       tmotorVex393_MC29, openLoop, reversed)
-#pragma config(Motor,  port3,           intake2,       tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port2,           intake1,       tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port3,           intake2,       tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port4,           leftRear,      tmotorVex393_MC29, openLoop, driveLeft, encoderPort, None)
 #pragma config(Motor,  port5,           leftFront,     tmotorVex393_MC29, openLoop, driveLeft, encoderPort, None)
 #pragma config(Motor,  port6,           rightRear,     tmotorVex393_MC29, openLoop, driveRight, encoderPort, None)
@@ -93,7 +93,7 @@ void intake(int speed)
 }
 void shoot(int speed)
 {
-	motor [shooterL] = motor[shooterR] = speed;
+	motor [shooterL] = motor[shooterR] = motor[shooterLB] = motor[shooterRB] = speed;
 }
 void stopAll()
 {
@@ -121,7 +121,7 @@ task autonomous()
 	//Ball One
 
 	shoot(127);
-	wait1Msec(5000);
+	wait1Msec(1000);
 	intake(127);
 	wait1Msec(750);
 	intake(0);
@@ -130,7 +130,7 @@ task autonomous()
 	//Ball Two
 
 	shoot(127);
-	wait1Msec(5000);
+	wait1Msec(1000);
 	intake(127);
 	wait1Msec(750);
 	intake(0);
@@ -139,7 +139,7 @@ task autonomous()
 	//Ball Three
 
 	shoot(127);
-	wait1Msec(5000);
+	wait1Msec(1000);
 	intake(127);
 	wait1Msec(750);
 	intake(0);
@@ -148,7 +148,7 @@ task autonomous()
 	//Ball Four
 
 	shoot(127);
-	wait1Msec(5000);
+	wait1Msec(1000);
 	intake(127);
 	wait1Msec(750);
 	intake(0);

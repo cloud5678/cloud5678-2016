@@ -73,21 +73,34 @@ void drive(double y, double x, double r)//Some of these might need to be made ne
 	motor [leftRear] = (-x + y + r);
 	motor [rightRear] = (-x + y - r);
 }
+void setShooter (int x)
+{
+	motor[shooterL] = x;
+	motor[shooterR] = x;
+}
+void setIntake (int x)
+{
+	int i = 127;
+	motor[intakeT] = i*x;
+	motor[intakeB] = i*x;
+}
+
 
 task autonomous()
 {
+	wait1Msec(1000);
 
-	drive(-127,0,0);
-	wait1Msec(5000);//Test this
+	drive(127,0,0);
+	wait1Msec(3500);//Test this
 
-	drive(0,0,127);
-	wait1Msec(1750);
-	motor[shooterL] = motor[shooterR] = 127;
 	drive(0,0,0);
-	wait1Msec(3000);
-
-	motor[shooterL] = motor[shooterR] = 0;
-	drive(0,0,0);
+	wait1Msec(500);
+	setShooter(127);
+	wait1Msec(500);
+	setIntake(1);
+	wait1Msec(6000);
+	setShooter(0);
+	setIntake(0);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -101,17 +114,7 @@ task autonomous()
 
 
 ///////////////////////////////////////////////
-void setShooter (int x)
-{
-	motor[shooterL] = x;
-	motor[shooterR] = x;
-}
-void setIntake (int x)
-{
-	int i = 127;
-	motor[intakeT] = i*x;
-	motor[intakeB] = i*x;
-}
+
 task usercontrol()
 {
 	// User control code here, inside the loop
@@ -119,8 +122,8 @@ task usercontrol()
 	while(true)
 	{
 
-		int shoot = vexRT[Btn8D];
-		setShooter(shoot*120);
+		int shoot = 127*vexRT[Btn8D] - 16*vexRT[Btn8R];
+		setShooter(shoot);
 		int intake = vexRT[Btn5D] - vexRT[Btn5U];
 		setIntake(intake);
 		clearLCDLine(0);
