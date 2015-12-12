@@ -108,11 +108,9 @@ task autonomous()
 	/*
 	drive(127);
 	wait1Msec(7000);//Test this
-
 	motor[shooterL] = motor[shooterR] = 127;
 	drive(0);
 	wait1Msec(3000);
-
 	motor[shooterL] = motor[shooterR] = 0;
 	drive(0);
 	*/
