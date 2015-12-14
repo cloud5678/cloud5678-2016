@@ -1,5 +1,5 @@
-#pragma config(Motor,  port1,           leftConveyer,  tmotorVex393_HBridge, openLoop, reversed)
-#pragma config(Motor,  port2,           rightConveyer, tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port1,           intake,        tmotorVex393_HBridge, openLoop, reversed)
+#pragma config(Motor,  port2,           conveyer,      tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port3,           leftShoot1,    tmotorVex393TurboSpeed_MC29, openLoop)
 #pragma config(Motor,  port4,           leftShoot2,    tmotorVex393TurboSpeed_MC29, openLoop, reversed)
 #pragma config(Motor,  port5,           rightShoot1,   tmotorVex393TurboSpeed_MC29, openLoop, reversed)
@@ -60,23 +60,23 @@ void pre_auton()
 	motor [rightShoot2] = x;
 }
 
-	void intake (float x)
+	void intaked (float x)
 
 {
-	motor [leftConveyer] = x;
-	motor [rightConveyer] = x;
+	motor [intake] = x;
+	motor [conveyer] = x;
 }
 	void stopper ()
 	{
-		intake(0);
+		intaked(0);
 	}
 
 	int ballWait = 650;
 	void repat ()
 {
-	shoot (87);
+	shoot (85);
 	wait1Msec(2000);
-	intake(-65);
+	intaked(65);
 	wait1Msec(ballWait);
 }
 task autonomous()
@@ -91,7 +91,7 @@ task autonomous()
 	repat();
 	wait1Msec(4000);
 	shoot(0);
-	intake(0);
+	intaked(0);
 
 }
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -113,7 +113,7 @@ task autonomous()
 //}
 //void intake (int x)
 //{
-//	motor[leftConveyer] = motor[rightConveyer] = x;
+//	motor[intake] = motor[conveyer] = x;
 //}
 //task usercontrol()
 //{
@@ -140,7 +140,7 @@ motor[leftShoot1] = motor[rightShoot1] = sum;
 }
 void setIntake (int x, int y)
 {
-	motor[leftConveyer] = motor[rightConveyer] = x - y;
+	motor[intake] = motor[conveyer] = x - y;
 }
 task usercontrol()
 {
