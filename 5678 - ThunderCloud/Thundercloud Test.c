@@ -1,8 +1,10 @@
+#pragma config(I2C_Usage, I2C1, i2cSensors)
+#pragma config(Sensor, I2C_1,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Motor,  port1,           intake,        tmotorVex393_HBridge, openLoop, reversed)
 #pragma config(Motor,  port2,           conveyer,      tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port3,           leftShoot1,    tmotorVex393TurboSpeed_MC29, openLoop)
 #pragma config(Motor,  port4,           leftShoot2,    tmotorVex393TurboSpeed_MC29, openLoop, reversed)
-#pragma config(Motor,  port5,           rightShoot1,   tmotorVex393TurboSpeed_MC29, openLoop, reversed)
+#pragma config(Motor,  port5,           rightShoot1,   tmotorVex393TurboSpeed_MC29, PIDControl, reversed, encoderPort, I2C_1)
 #pragma config(Motor,  port6,           rightShoot2,   tmotorVex393TurboSpeed_MC29, openLoop)
 #pragma config(Motor,  port7,           frontLeft,     tmotorVex393_MC29, openLoop, driveLeft)
 #pragma config(Motor,  port8,           backLeft,      tmotorVex393_MC29, openLoop, reversed, driveLeft)
@@ -19,6 +21,10 @@
 
 #include "Vex_Competition_Includes.c"   //Main competition background code...do not modify!
 
+
+#define TURNSPERREV 261.333
+#define TARGETRPM 6000
+
 /////////////////////////////////////////////////////////////////////////////////////////
 //
 //                          Pre-Autonomous Functions
@@ -30,6 +36,7 @@
 
 void pre_auton()
 {
+
 	// Set bStopTasksBetweenModes to false if you want to keep user created tasks running between
 	// Autonomous and Tele-Op modes. You will need to manage all user created tasks if set to false.
 	bStopTasksBetweenModes = true;
@@ -48,11 +55,11 @@ void pre_auton()
 /////////////////////////////////////////////////////////////////////////////////////////
 
 
-	// .....................................................................................
-	// Insert user code here.
-	// .....................................................................................
+// .....................................................................................
+// Insert user code here.
+// .....................................................................................
 
-	void shoot ( float x)
+void shoot ( float x)
 {
 	motor [leftShoot1] = x;
 	motor [leftShoot2] = x;
@@ -131,21 +138,27 @@ void driveArcade(int y, int x)
 	motor[frontLeft] = motor[backLeft] = y - x;
 	motor[frontRight] = motor[backRight] = y + x;
 }
-void setShooter (float x, float y, float z)
-{
-float sum = x+y+z;
-if (sum > 127)sum = 127;
-motor[leftShoot1] = motor[rightShoot1] = sum;
-  motor[leftShoot2] = motor[rightShoot2] = sum;
-}
 void setIntake (int x, int y)
 {
 	motor[intake] = motor[conveyer] = x - y;
 }
+void setShooter (float shootX)
+{
+	motor[leftShoot1] = motor[rightShoot1] = shootX;
+  motor[leftShoot2] = motor[rightShoot2] = shootX;
+  }
+float getShooter (float x, float y, float z)
+{
+float sum = x+y+z;
+if (sum > 127)sum = 127;
+return sum;
+}
 task usercontrol()
 {
 	// User control code here, inside the loop
-
+slaveMotor(rightShoot2, rightShoot1);
+slaveMotor(leftShoot1, rightShoot1);
+slaveMotor(leftShoot2, rightShoot1);
 	while (true)
 	{
 		// This is the main execution loop for the user control program. Each time through the loop
@@ -155,21 +168,29 @@ task usercontrol()
 		// Insert user code here. This is where you use the joystick values to update your motors, etc.
 		// .....................................................................................
 		int driveX = -vexRT[Ch2];
-		float shoot = vexRT[Ch3];
 		int driveY = vexRT[Ch1] ;
 		int intakeForward = vexRT[Btn5U];
 		int intakeBackwards = vexRT[Btn5D];
-		float slow =vexRT[Btn7D]*60 + vexRT[Btn7R]*65 + vexRT[Btn7L]*70;
-		float fast = vexRT[Btn7U]*75;
 		driveArcade(driveY * 127 / 128, driveX * 127 / 128);
-		setShooter(shoot, fast, slow);
 		setIntake(intakeForward*127, intakeBackwards*127);
+		float slow =vexRT[Btn7D]*75 + vexRT[Btn7R]*80 + vexRT[Btn7L]*85;
+		float fast = vexRT[Btn7U]*90;
+		float shootX = getShooter(slow, fast, 0.0);
+		if (vexRT[Btn8U] == 1) {
+				nMotorPIDSpeedCtrl[rightShoot1] = RegIdle;
+			}
+				else if(vexRT[Btn8D] == 1) {
+					nMotorPIDSpeedCtrl[rightShoot1] = RegSpeed;
+				}
+			wait1Msec(20);
 
-		// This is the main execution loop for the user control program. Each time through the loop
-		// your program should update motor + servo values based on feedback from the joysticks.
 
-		// .....................................................................................
-		// Insert user code here. This is where you use the joystick values to update your motors, etc.
-		// .....................................................................................
+motor [rightShoot1] = shootX;
+			// This is the main execution loop for the user control program. Each time through the loop
+			// your program should update motor + servo values based on feedback from the joysticks.
+
+			// .....................................................................................
+			// Insert user code here. This is where you use the joystick values to update your motors, etc.
+			// .....................................................................................
+		}
 	}
-}
