@@ -112,7 +112,7 @@ task FwControlTask()
 	// Set the gain
 	gain = 0.00025;
 
-	// We are using Speed geared motors
+	// We are using Torque geared motors
 	// Set the encoder ticks per revolution
 	ticks_per_rev = MOTOR_TPR_393R;
 

@@ -26,17 +26,13 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 task autonomous()
 {
-	//Adujust Times Below
-
 	//Ball One
-
 	shoot(speeder);
 	wait1Msec(2000);
 	intake(127);
 	wait1Msec(400);
 	intake(0);
 	wait1Msec(750);
-
 	//Ball Two
 	fire();
 	//Ball Three
@@ -45,20 +41,19 @@ task autonomous()
 	fire();
 	//All Stop
 	stopAll();
-
 }
 ///////////////////////////////////////////////////////////////
 task usercontrol()
 {
 	// Start the flywheel control task
-	startTask( FwControlTask );
+	startTask(FwControlTask);
 	while(true)
 	{
 		// Different speeds set by buttons
 		if( vexRT[ Btn8L ] == 1 )
 			FwVelocitySet( 144, 0.55 );//Test These Numbers
 		if( vexRT[ Btn8U ] == 1 )
-			FwVelocitySet( 120, 0.38 );
+			FwVelocitySet( 120, 0.38 );//I think the first number is the target RPM and the second number says how fast it can get to the target speed
 		if( vexRT[ Btn8R ] == 1 )
 			FwVelocitySet( 50, 0.2 );
 		if( vexRT[ Btn8D ] == 1 )
@@ -112,6 +107,5 @@ task usercontrol()
 		{
 			yR = 0;
 		}
-
 	}
 }
