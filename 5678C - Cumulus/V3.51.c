@@ -356,11 +356,17 @@ task usercontrol()
 	{
 		// Different speeds set by buttons
         if( vexRT[ Btn8L ] == 1 )
-            FwVelocitySet( 144, 0.55 );//Test These Numbers
+            FwVelocitySet( 144, 0.55 );
+        if( vexRT[ Btn8L ] == 0 )
+            FwVelocitySet( 0, 0.00 );//Test These Numbers
         if( vexRT[ Btn8U ] == 1 )
             FwVelocitySet( 120, 0.38 );
+        if( vexRT[ Btn8U ] == 0 )
+            FwVelocitySet( 0, 0.00 );
         if( vexRT[ Btn8R ] == 1 )
             FwVelocitySet( 50, 0.2 );
+        if( vexRT[ Btn8R ] == 0 )
+            FwVelocitySet( 0, 0.00 );
         if( vexRT[ Btn8D ] == 1 )
             FwVelocitySet( 00, 0 );
           wait1Msec(10);
