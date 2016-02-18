@@ -193,7 +193,7 @@ task usercontrol()
 		float yL = vexRT[Ch3];
 		float xR = vexRT[Ch1];
 		float yR = vexRT[Ch2];
-		float setPoint = 80;
+		float setPoint = 98;
 		//Intake & Shooter
 		if (vexRT [Btn7U] == 1 && getMotorVelocity(shooterR) < setPoint && getMotorVelocity(shooterL) < setPoint)
 		{
