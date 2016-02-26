@@ -192,7 +192,7 @@ task usercontrol()
 		else if (vexRT [Btn7U] == 1 && getMotorVelocity(rightShoot1) < setPoint && getMotorVelocity(leftShoot1) == setPoint)
 		{
 			motor[leftShoot1] = 80;
-			motor[rightShoot1] = 100;
+		 	motor[rightShoot1] = 100;
 			motor[leftShoot2] = 80;
 			motor[rightShoot2] = 100;
 		}
