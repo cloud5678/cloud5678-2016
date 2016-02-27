@@ -126,10 +126,12 @@ task autonomous()
 //		int intaker = vexRT[Btn7U];
 //		intake(intaker*127);
 
-void driveArcade(int y, int x)
+void drive(float y, float x, float r)//Some of these might need to be made negative
 {
-	motor[frontLeft] = motor[backLeft] = y - x;
-	motor[frontRight] = motor[backRight] = y + x;
+	motor [frontLeft] = (x + y + r);
+	motor [frontRight] = (x + y - r);
+	motor [backLeft] = (-x + y + r);
+	motor [backRight] = (-x + y - r);
 }
 void setIntake (int x, int y)
 {
@@ -147,13 +149,22 @@ task usercontrol()
 		// .....................................................................................
 		// Insert user code here. This is where you use the joystick values to update your motors, etc.
 		// .....................................................................................
-		int driveX = -vexRT[Ch2];
-		int driveY = vexRT[Ch1] ;
 		int intakeForward = vexRT[Btn5U];
 		int intakeBackwards = vexRT[Btn5D];
 		float setPoint = 98;
-		driveArcade(driveY * 127 / 128, driveX * 127 / 128);
+				int window = 25;
+		int x = vexRT[Ch3];
+		if(abs(x) < window)
+			x = 0;
+		int y = vexRT[Ch4];
+		if(abs(y) < window)
+			y = 0;
+		int r = vexRT[Ch1];
+		if(abs(r) < window)
+			r = 0;
+		drive(x, y, r);
 		setIntake(intakeForward*127, intakeBackwards*127);
+		//////////////////////////////////////////////////////////
 		if (vexRT [Btn7U] == 1 && getMotorVelocity(rightShoot1) < setPoint && getMotorVelocity(leftShoot1) < setPoint)
 		{
 			motor[rightShoot1] = 100;
