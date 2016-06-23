@@ -19,6 +19,7 @@
 
 #include "Vex_Competition_Includes.c"   //Main competition background code...do not modify!
 
+int lastMotor = 1;
 /////////////////////////////////////////////////////////////////////////////////////////
 //
 //                          Pre-Autonomous Functions
@@ -71,10 +72,10 @@ void stopper ()
 	intaked(0);
 }
 
-int ballWait = 650;
+int ballWait = 750;
 void repat ()
 {
-	shoot (70);
+	shoot (76);
 	wait1Msec(2000);
 	intaked(65);
 	wait1Msec(ballWait);
@@ -160,53 +161,64 @@ task usercontrol()
 		if(abs(y) < window)
 			y = 0;
 		int r = vexRT[Ch1];
-		int shooting = vexRT[Btn7U];
+		int shooting = 1;
 		int motorShoot = 0;
 		if(abs(r) < window)
 			r = 0;
 		drive(x, y, r);
 		setIntake(intakeForward*127, intakeBackwards*127);
+		float scaleFactor = 1.0;
+		if (vexRT[Btn7U] == 1){
+			setPoint = 98;
+			scaleFactor = .90;
+		} else if (vexRT[Btn7L] == 1){
+			setPoint = 91;
+			scaleFactor = .85;
+		} else if (vexRT[Btn7R] == 1){
+			setPoint = 83;
+			scaleFactor = .80;
+		} else if (vexRT[Btn7D] == 1){
+			setPoint = 78;
+			scaleFactor = 0.75;
+		} else if (vexRT[Btn8U] == 1){
+			setPoint = 73;
+			scaleFactor = 0.70;
+		} else if (vexRT[Btn8L] == 1){
+			setPoint = 68;
+			scaleFactor = 0.65;
+		} else if (vexRT[Btn8R] == 1){
+		  setPoint = 61;
+			scaleFactor = 0.60;
+		} else if (vexRT[Btn8D] == 1){
+		  setPoint = 54;
+			scaleFactor = 0.55;
+		} else {
+			shooting = 0;
+		}
+		float diffRPM = setPoint - getMotorVelocity(rightShoot1);
 		//////////////////////////////////////////////////////////
+		/*
 		if (shooting && getMotorVelocity(rightShoot1) < setPoint )
 		{
-			motorShoot = 100;
-			motor[rightShoot1] = 100;
-			motor[leftShoot1] = 100;
-			motor[leftShoot2] = 100;
-			motor[rightShoot2] = 100;
+			motorShoot = 100 * scaleFactor;
 		}
 		else if (shooting == 1 && getMotorVelocity(rightShoot1) > setPoint )
 		{
-			motorShoot = 40;
-			motor[rightShoot1] = 40;
-			motor[leftShoot1] = 40;
-			motor[leftShoot2] = 40;
-			motor[rightShoot2] = 40;
-		}
-		else if (shooting == 1 && getMotorVelocity(rightShoot1) < setPoint )
-		{
-			motorShoot = 40;
-			motor[leftShoot1] = 40;
-			motor[rightShoot1] = 40;
-			motor[leftShoot2] = 40;
-			motor[rightShoot2] = 40;
+			motorShoot = 40 * scaleFactor;
 		}
 		else if (shooting == 1 && getMotorVelocity(rightShoot1) == setPoint)
 		{
-			motorShoot = 80;
-			motor[leftShoot1] = 80;
-			motor[rightShoot1] = 80;
-			motor[leftShoot2] = 80;
-			motor[rightShoot2] = 80;
+			motorShoot = 80 * scaleFactor;
+		}
+		*/
+		if (shooting == 1) {
+			motorShoot = scaleFactor*127.0;
 		}
 		else if(shooting == 0)
 		{
 			motorShoot = 0;
-			motor[leftShoot1] = 0;
-			motor[rightShoot1] = 0;
-			motor[leftShoot2] = 0;
-			motor[rightShoot2] = 0;
 		}
+		motor[leftShoot1] = motor[leftShoot2] = motor[rightShoot1] = motor[rightShoot2] = motorShoot;
 		// This is the main execution loop for the user control program. Each time through the loop
 		// your program should update motor + servo values based on feedback from the joysticks.
 
